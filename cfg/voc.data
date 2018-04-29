@@ -1,0 +1,5 @@
+classes= 1
+train  = /home/boger/darknet/train_ColonPolyps.txt
+valid  = /home/boger/darknet/test100_ColonPolyps.txt
+names = data/voc.names
+backup = backup
