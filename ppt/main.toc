@@ -1,0 +1,11 @@
+\beamer@endinputifotherversion {3.14pt}
+\beamer@sectionintoc {1}{Task Description}{3}{0}{1}
+\beamer@sectionintoc {2}{Model Selection}{5}{0}{2}
+\beamer@subsectionintoc {2}{1}{Existing State-of-the-art Detection Systems}{5}{0}{2}
+\beamer@subsectionintoc {2}{2}{Advantages of YOLO architecture}{9}{0}{2}
+\beamer@sectionintoc {3}{Colon Polyps Detection System}{15}{0}{3}
+\beamer@sectionintoc {4}{Experiments}{20}{0}{4}
+\beamer@subsectionintoc {4}{1}{Training Settings}{20}{0}{4}
+\beamer@subsectionintoc {4}{2}{Testing}{23}{0}{4}
+\beamer@subsectionintoc {4}{3}{Evaluation of Classification}{25}{0}{4}
+\beamer@sectionintoc {5}{Conclusions}{28}{0}{5}

@@ -1,0 +1,499 @@
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice.
+
+\documentclass{beamer}
+
+% There are many different themes available for Beamer. A comprehensive
+% list with examples is given here:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+% You can uncomment the themes below if you would like to use a different
+% one:
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{boxes}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+\usetheme{Darmstadt}
+%\usetheme{default}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+%\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+\usepackage{graphicx}  % 插图宏包
+\usepackage{multicol}  % 一张slide插入多张图 或 插入表格时用到的\multicol命令
+\usepackage{multirow}  % 一张slide插入多张图 或 插入表格时用到的\multirow命令
+\setbeamertemplate{caption}[numbered]{}  % 图片标题序号
+\usepackage{caption}   % 设置图片标题字体大小
+\usepackage{comment}
+
+\title{Colon Polyps Detection based on Deep Learning}
+
+% A subtitle is optional and this may be deleted
+%\subtitle{Optional Subtitle}
+
+\author{Chen Chengbo}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[Sun Yat-sen University] % (optional, but mostly needed)
+{
+  School of Mathematics\\
+  Sun Yat-sen University
+}
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+%\date{Conference Name, 2013}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{Theoretical Computer Science}
+% This is only inserted into the PDF information catalog. Can be left
+% out.
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Let's get started
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Section and subsections will appear in the presentation overview
+% and table of contents.
+\section{Task Description}
+
+%\subsection{First Subsection}
+
+\begin{frame}{Real-time Colon Polyps Detection Task}
+  \begin{itemize}
+  \item {
+    Accurate classification \pause
+  }
+  \item {
+    Precise localization \pause
+  }
+  \item {
+    Real-time performance \pause
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Dataset}
+\begin{multicols}{2}
+\begin{figure}[1]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=5cm]{fig1}\\
+  \captionsetup{font={scriptsize}}
+  \caption{An example of colon endoscopy images. The whole dataset consists of 1,164 images of various sizes from different patients. 324 among them are discriminated to have at least one colon polyps. The dataset comes from Doctor Zhong Dong.}
+\end{figure}
+~
+\begin{figure}[2]
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=5cm]{fig2}\\
+  \captionsetup{font={scriptsize}}
+  \caption{An example of labels. All 324 images were labeled by Doctor Zhong Dong using LabelImg software.}\label{fig2}
+\end{figure}
+\end{multicols}
+
+\end{frame}
+%\subsection{Second Subsection}
+
+\section{Model Selection}
+
+\subsection{Existing State-of-the-art Detection Systems}
+
+\begin{frame}{}
+  \begin{itemize}
+  \item {
+  DPM (Deformable Parts Model) \pause
+  \vspace{0.25cm}
+    \begin{itemize}
+    \item {Sliding window approach}
+    \vspace{0.15cm}
+    \item {Disjoint detection pipeline}
+    \end{itemize}
+  }
+  \pause
+\vspace{0.7cm}
+  \item {
+  R-CNN series (R-CNN, Fast R-CNN, Faster R-CNN) \pause
+  \vspace{0.25cm}
+    \begin{itemize}
+    \item {Region proposals approach}
+    \vspace{0.15cm}
+    \item {Disjoint detection pipeline}
+    \end{itemize}
+  }
+  \pause
+\vspace{0.7cm}
+  \item {
+  YOLO series (YOLOv1, YOLOv2, YOLOv3) \pause
+  \vspace{0.25cm}
+    \begin{itemize}
+    \item {Region proposals approach}
+    \vspace{0.15cm}
+    \item {A single fully convolutional network}
+    \end{itemize}
+  }
+  \end{itemize}
+
+\end{frame}
+
+\subsection{Advantages of YOLO architecture}
+\begin{frame}{Advantages of YOLO architecture}
+\begin{columns}
+    \begin{column}[l]{5cm}
+        \begin{itemize}[<+->]
+            \item
+                End-to-end Architecture
+                \vspace{0.2cm}
+            \item
+                Real-time Performance
+                \vspace{0.2cm}
+            \item 
+                Better Generalizability
+                \vspace{0.2cm}
+            \item 
+                Less False Positive Errors
+        \end{itemize}
+    \end{column}
+    \begin{column}[r]{8cm}
+        \only<1>
+        {
+            \begin{figure}
+                \includegraphics[width=6.5cm]{yolov3}
+                \captionsetup{font={scriptsize}}
+                \caption[1]{YOLOv3 architecture}
+            \end{figure}
+        }
+        \only<2>
+        {
+            \begin{figure}
+                \includegraphics[width=6.5cm]{Tbl1}
+                \captionsetup{font={scriptsize}}
+                \caption[2]{Real-time detection systems testing on PASCAL VOC 2007. This table is from [7].}
+            \end{figure}
+        }
+        \only<3>
+        {
+            \begin{figure}
+                \includegraphics[width=6.5cm]{fig3}
+                \captionsetup{font={scriptsize}}
+                \caption[3]{Generalization results on Picasso and People-Art work. The figure comes from [7].}
+            \end{figure}
+        }
+        \only<4>
+        {
+            \begin{figure}
+                \includegraphics[width=6.5cm]{fig4}
+                \captionsetup{font={scriptsize}}
+                \caption[4]{Error analysis: Fast R-CNN vs. YOLO. The figure is from [7].}
+            \end{figure}
+        }
+    \end{column}
+\end{columns}
+\end{frame}
+
+\section{Colon Polyps Detection System}
+
+\begin{frame}{Colon Polyps Detection System}
+\begin{columns}
+  \begin{column}[l]{4.5cm}
+    \begin{itemize}[<+->]
+      \item {
+        YOLOv3 Architecture \vspace{0.3cm}
+        \begin{itemize}
+          \item Fully convolutional network \vspace{0.2cm}
+          \item Multi-scale prediction
+        \end{itemize}
+      }\vspace{0.6cm}
+      \item 
+        Transfer Learning 
+    \end{itemize}
+  \end{column}
+  \begin{column}[r]{8.5cm}
+    \only<1>
+    {
+      \begin{figure}
+      \includegraphics[width=7.25cm]{yolov3}
+      \captionsetup{font={scriptsize}}
+      \caption[1]{YOLOv3 architecture}
+      \end{figure}
+    }
+    \only<2>
+    {
+      \begin{figure}
+      \includegraphics[width=7.25cm]{yolov3}
+      \captionsetup{font={scriptsize}}
+      \caption[2]{YOLOv3 architecture}
+      \end{figure}
+    }
+    \only<3>
+    {
+      \begin{figure}
+      \includegraphics[width=7.25cm]{yolov3}
+      \captionsetup{font={scriptsize}}
+      \caption[3]{YOLOv3 architecture}
+      \end{figure}
+    }
+    \only<4>
+    {
+      \begin{figure}
+      \includegraphics[width=7.25cm]{yolov3}
+      \captionsetup{font={scriptsize}}
+      \caption[4]{YOLOv3 architecture}
+      \end{figure}
+    }
+  \end{column}  
+\end{columns}
+\end{frame}
+
+\section{Experiments}
+
+\subsection{Training Settings}
+\begin{frame}{Training Settings}
+  \begin{itemize}
+    \item {
+      Dataset partitioning
+      \begin{itemize}
+        \item Training set: 224 of the 324 labeled images.
+        \item Test set: the rest of the labeled images.
+      \end{itemize}
+    }
+    %\item {
+    %  Number of filters of the detector layers are set to 18. Weights of the detector layers are randomly initialized and trained while weights of all other layers are fixed and pre-trained on ImageNet.
+    %}
+    \item {Multi-scale training approach}
+    \item {Data augmentation: rotation, saturation, exposure, etc.}
+    \item {Learning rate: 0.1, momentum: 0.9, weight decay: 0.0005}
+    \item {Batch size: 64, Max batches: 15000.}
+    \item {
+      15.5 hours for training. 
+      \begin{itemize}
+        \item A Titan X GPU for the first 2500 batches.
+        \item Two Titan X GPUs for subsequent iterations.
+      \end{itemize}
+    }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Average loss curves}
+  \begin{multicols}{2}
+    \begin{figure}
+      \centering
+      % Requires \usepackage{graphicx}
+      \includegraphics[width=5cm]{fig8-a}\\
+      \captionsetup{font={scriptsize}}
+      \caption{Curve of exponentially weighted average loss with coefficient being 0.9}
+    \end{figure}
+\columnbreak
+    \begin{figure}
+      \centering
+      % Requires \usepackage{graphicx}
+      \includegraphics[width=5cm]{fig8-b}\\
+      \captionsetup{font={scriptsize}}
+      \caption{Curve of logarithm of average loss}
+    \end{figure}
+  \end{multicols}
+\end{frame}
+
+\subsection{Testing}
+\begin{frame}{Testing}
+  \begin{itemize}
+    \item Testing on a Titan X GPU.
+    \item 75.26\% recall and 70.87\% precision
+    \item 0.0306 seconds per image (32.6 fps). Real-time performance.
+  \end{itemize}
+  \begin{figure}[h]
+    \begin{center}$
+    \begin{array}{cc}
+    \includegraphics[width=5cm]{fig9-a} &
+    \includegraphics[width=5cm, height=3.83cm]{fig9-b}
+    \end{array}$
+    \end{center}
+    \captionsetup{font={scriptsize}}
+    \caption{Examples of correctly detected colon polyps.}
+  \end{figure}
+\end{frame}
+
+\subsection{Evaluation of Classification}
+\begin{frame}
+
+  \begin{table}[ht]
+    \centering
+    \begin{tabular}{|c|c|c|c| }
+      \hline
+      & \multicolumn{2}{|c|}{Ground Truth} & \multirow{2}{*}{Total} \\
+      \cline{1-3}
+      Prediction & Normal & Colon Polyp(s) & \\
+      \hline
+      Normal & 93 & 11 & 104 \\
+      \hline
+      Colon Polyp(s) & 13 & 83 & 96\\
+      \hline
+      Total & 106 & 94 & 200\\
+      \hline
+    \end{tabular}
+    \caption{Results of classification evaluation. recall=83/94=88.30\%, precision=83/96=86.46\%}
+  \end{table}
+
+\end{frame}
+
+
+% You can reveal the parts of a slide one at a time
+% with the \pause command:
+\begin{frame}{Second Slide Title}
+  \begin{itemize}
+  \item {
+    First item.
+    \pause % The slide will pause after showing the first item
+  }
+  \item {
+    Second item.
+  }
+  % You can also specify when the content should appear
+  % by using <n->:
+  \item<3-> {
+    Third item.
+  }
+  \item<4-> {
+    Fourth item.
+  }
+  % or you can use the \uncover command to reveal general
+  % content (not just \items):
+  \item<5-> {
+    Fifth item. \uncover<6->{Extra text in the fifth item.}
+  }
+  \end{itemize}
+\end{frame}
+
+
+
+\section{Second Main Section}
+
+\subsection{Another Subsection}
+
+\begin{frame}{Blocks}
+\begin{block}{Block Title}
+You can also highlight sections of your presentation in a block, with it's own title
+\end{block}
+\begin{theorem}
+There are separate environments for theorems, examples, definitions and proofs.
+\end{theorem}
+\begin{example}
+Here is an example of an example block.
+\end{example}
+\end{frame}
+
+% Placing a * after \section means it will not show in the
+% outline or table of contents.
+\section*{Summary}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+  \item
+    The \alert{first main message} of your talk in one or two lines.
+  \item
+    The \alert{second main message} of your talk in one or two lines.
+  \item
+    Perhaps a \alert{third message}, but not more than that.
+  \end{itemize}
+
+  \begin{itemize}
+  \item
+    Outlook
+    \begin{itemize}
+    \item
+      Something you haven't solved.
+    \item
+      Something else you haven't solved.
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+
+% All of the following is optional and typically not needed.
+\appendix
+\section<presentation>*{\appendixname}
+\subsection<presentation>*{For Further Reading}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{For Further Reading}
+
+  \begin{thebibliography}{10}
+
+  \beamertemplatebookbibitems
+  % Start with overview books.
+
+  \bibitem{Author1990}
+    A.~Author.
+    \newblock {\em Handbook of Everything}.
+    \newblock Some Press, 1990.
+
+
+  \beamertemplatearticlebibitems
+  % Followed by interesting articles. Keep the list short.
+
+  \bibitem{Someone2000}
+    S.~Someone.
+    \newblock On this and that.
+    \newblock {\em Journal of This and That}, 2(1):50--100,
+    2000.
+  \end{thebibliography}
+\end{frame}
+
+\end{document}
+
+
