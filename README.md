@@ -9,5 +9,6 @@ cd darknet
 make
 ```
 ### Step 2: Create neccessary files
-* Create folder "VOCdevkit" in the current directory.
+First, create folder `VOCdevkit\Colonpolyps\` in the current directory. Then, go to the `VOCdevkit\Colonpolyps\` directory, and create four folders: `Annotations\`, `ImageSets\`, `JPEGImages\`, `labels\`. (See the figure below)
+
 
