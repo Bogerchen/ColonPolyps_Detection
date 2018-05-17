@@ -8,7 +8,7 @@ git clone https://github.com/pjreddie/darknet
 cd darknet
 make
 ```
-### Step 2: Create neccessary files
+### Step 2: Create necessarry files
 First, create folder `VOCdevkit\Colonpolyps\` in the current directory. Then, go to the `VOCdevkit\Colonpolyps\` directory, and create three folders: `Annotations\`, `ImageSets\`, `JPEGImages\`. Details of the three folders are shown below:
 
 * `Annotations\` Contains xml documents of the images
@@ -26,3 +26,6 @@ Worth mentioning that images can be not only .jpeg or .jpg format but also .png 
 ![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/JPEGImages.png)
 
 Second, run voc_label.py in `darknet/` for converting xml documents to yolov3 readable labels. Before running voc_label.py, we need to modify voc_label.py, that is, change directories of files. voc_label.py generates labels for each image and txt files displaying paths and ids of train, validation and test images. For more details see voc_label.py.
+
+### Step 3: Modify corresponding files
+* Change `voc_names.txt`
