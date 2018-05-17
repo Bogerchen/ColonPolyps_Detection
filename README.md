@@ -20,4 +20,4 @@ Each xml document displays labels of an image. Labels includes size of the image
 Create directory `Main\` under the `ImageSets\`, then put txt files into `ImageSets\Main\` . The txt files save ids of the images for the train set, validation set and test set, respectively. See the txt file of the test set for an example.
 ![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/test_ids.png)
 
-`JPEGImages\` Contains all images for training. validating and testing.
+* `JPEGImages\` Contains all images for training. validating and testing.
