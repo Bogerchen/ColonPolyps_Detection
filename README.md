@@ -24,3 +24,5 @@ Create directory `Main\` under the `ImageSets\`, then put txt files into `ImageS
 * `JPEGImages\` Contains all images for training. validating and testing.
 Worth mentioning that images can be not only .jpeg or .jpg format but also .png format. Maybe other formats like .gif, .bmp are ok.
 ![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/JPEGImages.png)
+
+Second, run voc_label.py in `darknet/` for converting xml documents to yolov3 readable labels. Before running voc_label.py, we need to modify voc_label.py, that is, change directories of files. voc_label.py generates labels for each image and txt files displaying paths and ids of train, validation and test images. For more details see voc_label.py.
