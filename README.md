@@ -83,7 +83,9 @@ For recall of the validation, change the lines in function **validate_detector_r
 ```
 
 ## Testing
-Create a file folder to store predictions. Then run the command:
+Create a file folder to store predictions. Then run the command (changing the path and gpu for your own):
 ```Bash
 ./darknet detector test cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_8500.weights /home/amax/ChenCB/darknet/VOCdevkit/Colonpolyps/JPEGImages/200001~107.png -out 100_predictions/pred_200001~107 -gpus 3
 ```
+<br>
+**Referenced csdn blog**: https://blog.csdn.net/lilai619/article/details/79695109
