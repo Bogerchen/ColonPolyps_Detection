@@ -76,7 +76,7 @@ For multi-GPUs traing:
 ./darknet detector valid cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_final.weights
 ```
 For recall of the validation, change the lines in function **validate_detector_recall** of file **detector.c** shown in the figure below:
-![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/detector1.png)<br>
+![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/detector.png)<br>
  Then run the command:
 ```Bash
 ./darknet detecto recall cfg/voc.data cfg/yolov3-voc.cfg backup/yolov3-voc_final.weights
