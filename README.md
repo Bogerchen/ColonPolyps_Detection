@@ -29,3 +29,9 @@ Second, run `voc_label.py` in `darknet/` for converting xml documents to yolov3 
 
 ### Step 3: Modify corresponding files
 * Change `voc_names.txt`
+`voc_names.txt` is under `darknet\data\` directory displaying names of all classes. Each line of this txt file is the name of a single class. Change each line to match the names of polyps. See the figure above.
+![](https://github.com/Bogerchen/ColonPolyps_Detection/blob/imgs_to_edit_README/voc_names.png)
+Or just replace the `voc_names.txt` in `darknet\data\` with the `voc_names.txt` in the master branch of this repository.
+
+* Modify `\cfg\yolov3-voc.cfg`
+This file displays the network architecture of YOLOv3. To train on my own colon polyps dataset, I need to change the dimensions of the output layer, that is, change the number of filters from 75 to 18 of the three layers which come before the 'yolo' layer. The number of filters is computed using formula <img src="https://latex.codecogs.com/svg.latex?\Large&space;x=3\times(5+C)" title="\Large x=3\times(5+C)" />, where C denotes number of classes. For example, in my colon polyps detection application, I only have one type of object to detect, so C=1.
