@@ -1,0 +1,628 @@
+\def\CTeXPreproc{Created by ctex v0.2.12, don't edit!}\def\CTeXPreproc{Created by ctex v0.2.12, don't edit!}
+\documentclass[a4paper,twoside,openany]{cctbook}
+\standardtilde \let\standardtilde=\relax
+\usepackage{CJK}
+
+\usepackage[all]{xy}
+\usepackage{bbm}
+\usepackage{times}
+\usepackage{blkarray}
+\usepackage{amsmath}    % AMS 数学包
+\usepackage{amssymb}    % AMS 数学符号包
+\usepackage{amsthm}     % AMS 数学定理包
+\usepackage{bm}
+\usepackage{lipsum}
+\usepackage{titletoc}         % 数学粗体（命令 \bm）
+\usepackage{upgreek}    % 直立体希腊字母（主要使用 \uppi）
+\usepackage{multirow}
+\usepackage{mathrsfs}   % 数学花体（\mathscr 命令）
+\usepackage{extarrows}  % 可延伸的箭头、等号（如 \xlongequal[down]{up}）
+\usepackage{fancyhdr}
+\usepackage{subcaption}
+\allowdisplaybreaks
+\usepackage{ifpdf}      % 判断是否由 pdflatex 编译
+\ifpdf
+ \usepackage{ccmap}     % PDF 支持中文复制粘贴
+ \def\outdrv{pdftex}    % 设置输出驱动为 pdflatex
+\else
+ \def\outdrv{dvipdfm}   % 设置输出驱动为 dvipdfm(x)
+% \def\outdrv{dvips}     % 如果用 dvips 编译，也可以改成 dvips
+\fi
+\usepackage[\outdrv]{pict2e}    % 标准图形环境的增强，一般用处不大，但它可明显改进表格斜线的形状
+\usepackage[\outdrv]{graphicx}  % 插图宏包
+\ifpdf
+\usepackage{epstopdf}           % PDF 支持插入 EPS 文件，要求编译时加入 -shell-escape 选项
+\usepackage[\outdrv,%           驱动
+            CJKbookmarks,%      中文目录标签
+            bookmarksnumbered,% 标签编号
+            pdfstartview=FitH]{hyperref}% 打开 PDF 文件时缩放设为“适合宽度”
+% 超链接宏包
+
+\usepackage{anysize}   % 版面设置的宏包
+\usepackage{tocloft}    % 目录格式设置的宏包，与 CTeX 文档类略有冲突，下面会改正
+\usepackage[perpage]    % 使脚注按页分别编号
+{footmisc}
+
+\marginsize{3cm}{2cm}{1.5cm}{1cm}
+
+\pagestyle{fancy}   % 仅页脚给出页码
+\cfoot{\thepage}
+
+\fancyhead{}
+
+%\fancyhead[LE]{\bf\thepage}
+
+%\fancyhead[RO]{\bf\thepage}
+
+%\fancyhead[CE]{中山大学} %\qquad 黄志洪讲师}
+
+%\fancyhead[CO]{陈承勃}
+
+\raggedbottom
+
+\baselineskip 0.68cm
+\parskip 0.15cm
+\parindent 0.8cm
+\zihao{5}
+
+%% 行距设置
+\renewcommand{\baselinestretch}{1.3}   % 默认值即为 1.3，未做改变
+
+%% 段间距设置
+\setlength{\parskip}{0ex}   % 默认即为 0
+
+
+%% 目录格式设置
+% “目录”字样格式设置
+\setlength{\cftbeforetoctitleskip}{-1ex}     % 标题前垂直间距，在页首时会被忽略
+\setlength{\cftaftertoctitleskip}{8ex}      % 标题后垂直间距
+\renewcommand{\cfttoctitlefont}{\vspace*{0ex}\hfill\heiti\zihao{2}} % 字体。标题前不可忽略的间距用 \vspace* 得到
+\renewcommand{\cftaftertoctitle}{\hfill}
+
+
+% 目录项格式设置（这里只是少量设置举例）
+\renewcommand{\cftdot}{…}          % 引导点，用中文的省略号
+\renewcommand{\cftdotsep}{0}        % 引导点的距离
+\cftsetpnumwidth{1em}               % 页码所占宽度，页数较多时应改大些
+\renewcommand{\cftsecleader}{\bfseries\cftdotfill{\cftdotsep}}  % 节的引导点设置
+\renewcommand{\cftsecfont}{\bfseries\songti\zihao{-4}}                 % 节项目字体
+\renewcommand{\cftsecaftersnum}{}                               % 节数字后的标点
+
+% ！！！下面修正一个 BUG。 此段请勿再修改。如果不用 tecloft 宏包，则应把此段删去。
+% CTeX 宏包为了解决长章节数字的问题重定义了 \numberline；而 tocloft 宏包也重定义了它，为了加入控制命令集：\cftXpresnum \cftXaftersnum \cftXaftersnumb。 两个重定义的功能不同，得此得彼。这里只好把两个重定义的功能混合起来。
+\makeatletter
+\renewcommand{\numberline}[1]{%
+\settowidth\@tempdimb{#1\hspace{0.5em}}%
+\ifdim\@tempdima<\@tempdimb%
+  \@tempdima=\@tempdimb%
+\fi%
+\hb@xt@\@tempdima{\@cftbsnum #1\@cftasnum\hfil}\@cftasnumb}
+\makeatother
+% ！！！BUG 修正结束
+
+%% 方程编号设置
+%\numberwithin{equation}{section}   % 按节更新编号
+%\renewcommand{\theequation}{\arabic{chapter}.\arabic{section}.\arabic{equation}}
+%\numberwithin{table}{section}
+%\renewcommand{\thetable}{\arabic{chapter}.\arabic{section}.\arabic{table}}
+
+%% 定理类环境格式设置，参看 AMSthm 包的文档
+\newtheoremstyle{myart}% 类型名
+  {}%                   Space above, empty = `usual value'
+  {}%                   Space below
+  {}%                   Body font
+  {\parindent}%         Indent amount (empty = no indent, \parindent = para indent)
+  {\bfseries}%          Thm head font
+  {}%                   Punctuation after thm head
+  {1em}%                Space after thm head
+  {\thmname{#1}\thmnumber{~#2}\thmnote{（#3）}}%                   Thm head spec
+
+
+
+% 个人认为比较好看的中文破折号定义，供参考。其实科技论文中这个标点可以避免
+\def\mydash{\hskip0.025em plus 0.05em\raise0.2ex\hbox{---\kern-0.05em---}%
+\hskip0.025em plus 0.05em\relax}
+
+%%自定义命令，使参考文献引用以上标形式出现
+\newcommand{\supercite}[1]{\textsuperscript{\cite{#1}}}
+
+%% 自定义定理环境
+\theoremstyle{myart}       % 使用上面的类型设置定理
+\newtheorem{Example}{Example}[section]   % 每节重新编号
+\newtheorem{Definition}{Definition}[section]
+\newtheorem{Assumption}{Assumption}[section]
+\newtheorem{Prop}{Proposition}[section]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{Lemma}{Lemma}[section]  % 与定理统一编号
+\newtheorem{Remark}[Prop]{注}
+\newtheorem{remark}[Prop]{系}
+\newtheorem{Corollary}{推论}[section]
+\newtheorem*{Remark*}{Remark}           % 不编号
+\newtheorem*{myproof}{Proof}
+\newtheorem{question}{Q}
+\newtheorem{situation}{情况}
+\newtheorem{work}{作业}
+\newenvironment{Proof}{\begin{myproof}}{\qed\end{myproof}}
+\newcommand{\cP}{{\mathscr P}}
+\newcommand{\cC}{{\mathscr C}}
+\newcommand{\cA}{{\mathscr A}}
+  % 实际使用的定理环境，自动在末尾加上 QED
+
+\renewcommand{\chaptername}{}
+\usepackage{titlesec}
+\titleformat{\chapter}[hang]{\huge}{\textbf{\thechapter}}{1em}{}
+\titlespacing{\chapter}{0pt}{0pt}{0.5cm}
+\titleformat{\section}[hang]{\LARGE}{\textbf{\thesection}}{1em}{}
+\titlespacing{\section}{0pt}{0pt}{0.5cm}
+\titleformat{\subsection}[hang]{\Large}{\textbf{\thesubsection}}{1em}{}
+\titlespacing{\subsection}{0pt}{0pt}{0.3cm}
+
+\renewcommand*\contentsname{\Huge \textbf{Contents}}
+\usepackage{caption}
+\captionsetup[table]{name=Table}
+\captionsetup[figure]{name=Figure}
+
+
+\def\thebibliography#1{\leftline{\bf\LARGE Bibliography}\list
+{[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+\advance\leftmargin\labelsep
+\usecounter{enumi}}
+\def\newblock{\hskip .11em plus .33em minus .07em}
+\sloppy\clubpenalty4000\widowpenalty4000 \sfcode`\.=1000\relax}
+%------------------------------------------------------------------
+%-------------------------- 导言正文分割线--------------------------
+%------------------------------------------------------------------
+\newcommand{\kai}{\CJKfamily{kai}}      % 楷体   (Windows自带simkai.ttf)
+\newcommand{\hei}{\CJKfamily{hei}}      % 黑体   (Windows自带simhei.ttf)
+
+
+\def\disp{\displaystyle}
+\newcommand{\bed}{\begin{displaymath}}
+\newcommand{\eed}{\end{displaymath}}
+\newcommand{\bea}{\bed\begin{array}{rl}}
+\newcommand{\eea}{\end{array}\eed}
+\newcommand{\ad}{&\!\!\disp}
+\newcommand{\aad}{&\disp}
+\newcommand{\barray}{\begin{array}{rl}}
+\newcommand{\earray}{\end{array}}
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\al}{\alpha}
+\newcommand{\bt}{\beta}
+\newcommand{\dt}{\delta}
+\newcommand{\Dt}{\Delta}
+\newcommand{\dl}{\delta_k}
+\newcommand{\dln}{\delta_n}
+\newcommand{\Up}{\Upsilon}
+\newcommand{\ga}{\gamma}
+\newcommand{\ct}{\theta}
+\newcommand{\zt}{\zeta}
+\newcommand{\la}{\lambda}
+\newcommand{\ep}{\epsilon}
+\newcommand{\si}{\sigma}
+\newcommand{\om}{\omega}
+\newcommand{\mb}{\mathbb}
+\newcommand{\mc}{\mathcal}
+\newcommand{\ms}{\mathscr}
+\newcommand{\mf}{\mathfrak}
+\newcommand{\geqs}{\geqslant}
+\newcommand{\leqs}{\leqslant}
+\newcommand{\coeq}{\coloneqq}
+\newcommand{\cd}{(\cdot)}
+\newcommand{\ra}{\rightarrow}
+
+
+
+\allowdisplaybreaks[4]
+%% 以下为文章内容
+\begin{document}\large
+
+\frontmatter
+
+%%%%%%%%%%封面设计%%%%%%%%%%%%%%%%%%%%%
+\iffalse
+\begin{titlepage}
+\vspace*{1cm}
+\fontsize{17pt}{15pt} \selectfont
+\begin{center}
+{\heiti\Huge 中山大学学士学位论文}\\[1.6cm]
+{\heiti \LARGE 论文题目\\[0.5cm]
+   Colon Polyps Detection based on Deep Learning}
+
+ \vspace{2cm}
+
+\begin{tabular}{ll}
+{\kaishu 申\hskip 0.5em 请\hskip 0.5em 人:} & \hskip -3.5em  {\kaishu 陈承勃} \\[0.25cm]
+{\kaishu 导\hskip 2.0em 师:} &\hskip -3.5em {\kaishu 黄志洪讲师}\\[0.25cm]
+{\kaishu 专\hskip 2.0em 业:} &\hskip -3.5em {\kaishu 应用统计学}\\[2.5cm]
+%{\kai 研 \hskip 1pt 究 \hskip 1pt 方 \hskip 1pt 向:} &\hskip -3.5em {\kai 随机最优控制}\\
+
+{\kaishu 答辩委员会 \  (签名)} &\\[0.25cm]
+{\kaishu 主席:} &\\[0.25cm]
+{\kaishu 委员:}
+\end{tabular}
+\end{center}
+\end{titlepage}
+
+
+
+\vspace*{1cm} %插入空白
+\begin{center}
+%\fontsize{17pt}{15pt} \selectfont
+学位论文原创性声明\\[0.6cm]
+\end{center}
+
+%\fontsize{13pt}{11pt}\selectfont
+
+本人郑重声明: 所呈交的学位论文, 是本人在导师的指导下,
+独立进行研究工作所取得的成果. 除文中已经注明引用的内容外,
+本论文不包含任何其他个人或集体已经发表或撰写过的作品成果.
+对本文的研究作出重要贡献的个人和集体, 均已在文中以明确方式标明.
+本人完全意识到本声明的法律结果由本人承担.
+
+
+ \vskip 1.5cm 学位论文作者签名:
+
+ \vspace{0.5cm}  日 \hspace*{1em} 期:
+
+\vskip 2.2cm
+
+\begin{center}
+%\fontsize{17pt}{15pt} \selectfont
+学位论文原创性声明\\[0.6cm]
+\end{center}
+
+%\fontsize{13pt}{11pt}\selectfont
+
+本人完全了解中山大学有关保留、使用学位论文的规定，即：学校有权保留学位论文并向国家主管部门或其指定机构送交论文的电子版和纸质版，有权将学位论文用于非赢利目的的少量复制并允许论文进入学校图书馆、院系资料室被查阅，有权将学位论文的内容编入有关数据库进行检索，可以采用复印、缩印或其他方法保存学位论文。
+
+
+
+ \vskip 1.5cm 学位论文作者签名:\hspace*{8em}  导师签名:
+
+ \vspace{0.5cm}  日 \hspace*{1em} 期:\hspace*{13em} 日 \hspace*{1em} 期:
+\thispagestyle{empty}
+%\clearpage
+\fi
+
+\chapter*{\textbf{Abstract}}
+\addcontentsline{toc}{chapter}{Abstract}
+We first compare several state-of-the-art object detection systems and decide to construct our colon polyps detection pipeline on top of YOLOv3 for its end-to-end architecture, real-time performance, less false positive errors and better generalizability. We transfer YOLOv3 model to our application by randomly initializing and retraining the weights of the three detector layers while fixing all other layers. Our system achieves real-time performance at 32.6 fps on a Titan X GPU, and attains 75.26\% recall and 70.87\% precision. When regarded as a classifier, our system performs well with 88.30\% recall and 86.46\% precision in distinguishing images that contains colon polyps from normal images. However, owing to shortage of training data, the network architecture fails to extract deep features of colon polyps. As a result, our system struggles to precisely predict the exact locations of colon polyps and sometimes misclassify other kinds of polyps as colon polyps. The codes are available on my GitHub repository \url{https://github.com/Bogerchen/ColonPolyps_Detection}.
+
+{\emph{\textbf{Keywords:} deep learning; transfer learning; colon polyps detection; YOLOv3}}
+
+\chapter*{\textbf{摘要}}
+\addcontentsline{toc}{chapter}{摘要}
+
+本次研究的目标是建立结肠息肉实时检测系统。本文首先比较了当前几种先进的目标识别系统。其中，YOLOv3 模型实现了端到端的设计结构、具备实时检测的能力、更少发生假阳性错误、且泛化能力更强。因此，我们认为YOLOv3 是最适合我们应用场景的模型。我们基于YOLOv3模型，运用迁移学习的知识，随机初始化并重新训练三个检测层的参数，并同时固定其他层的结构和参数。在一块Titan X 的GPU 上检测时，我们的系统达到了32.6帧每秒的检测速度，即实现了实时性。在测试集上召回率为75.26\%， 准确率为70.87\%。我们的模型分类效果较好，用于分类正常图片和含有结肠息肉的图片时，其召回率为88.30\%、准确率为86.46\%。但由于训练数据缺乏，我们的模型在提取特征的能力上尚有所欠缺，使得系统有时不能精准的找到病灶的精确位置或将其他类型的息肉错判为结肠息肉。论文的代码放在我的GitHub库上\url{https://github.com/Bogerchen/ColonPolyps_Detection}.
+
+
+
+%\vskip 0.8cm
+
+ {\kaishu \textbf{关键词：}深度学习；迁移学习；结肠息肉检测系统；YOLOv3}
+
+
+\newpage
+\clearpage \tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+\mainmatter
+
+\chapter{\textbf{Introduction}}
+%\addcontentsline{toc}{chapter}{1  Introduction}
+\section{\textbf{Deep Learning and Transfer Learning}}
+In the recent years, research of deep learning has made remarkable progress so that in some applications deep learning now reaches or even surpasses human performance. As a result, more and more industry domains start to take in deep learning techniques so as to assist human beings in complex tasks or even take the place.
+
+Progress in computer vision especially object detection provides good opportunities for construction of Intelligent diagnosis and treatment system. For one thing, even an experienced doctor can only see very limited medical images for his whole career, while a neural network takes a large amount of images as input ,thus can obtain far more experience in characteristics of certain disease and unsurprisingly diagnoses more precisely than doctors. For example, Zhang Kang et al. \cite{Kermany} takes approximately 110,000 labeled optical coherence tomography images into their AI diagnostic system, and correctly distinguishes OCT images of diabetic macular edema, drusen and normal retina in 30 seconds. Meanwhile, the accuracy rate, specificity rate and sensitivity rate are all over 95\%, which are close to the performance of human experts. For another, computers are objective and more powerful in capturing the differences among pixels and observe more details of the images. Hence, doctors can benefit a lot from the information provided by AI systems to make more accurate and stable diagnosis and decision.
+
+Nowadays, AI systems are used to assist doctors in making diagnosis decision instead of replace them. One can imagine that the development of artificial intelligence can boost medical research. And in the near future, it’s possible that AI systems overtake human doctors and take the place in some medical domains.
+
+However, building a deep learning model always requires massive training data while in medical science researchers usually have very limited labeled data. As a result, it’s unpractical to build and train a deep convolutional neural network from scratch. \cite{Chuang} An efficient and practical solution to the lack of data is transfer learning. PF Felzenszwalb et al. \cite{Felzenszwalb} used a convolutional neural network that pretrained on the ImageNet. In training, weights of the lower layers are fixed as the transferring layers and the subsequent fully connected layers are rebuilt, initialized randomly and changed during the training process. In this step, inputs are the OCT images dataset. Experiments of \cite{Felzenszwalb} shows that employment of transfer learning can remarkably improve the accuracy while reducing training time. There are several methods to apply transfer learning. The advantage of transfer learning is that we can make full use of the information the system learned from other large scale training data and only make little modification of the original network architecture to fit our own task. Transfer learning is so efficient that it will be more widely used in medical research that has only comparably limited data in the future.
+\vspace{7mm}
+
+\section{\textbf{Task Description}}
+
+Our task is to build an intelligent diagnostic system that detects colon polyps in real-time. For each colon endoscopy image, our AI diagnostic system is supposed to precisely and quickly detect and localize the colon polyps. This is an object detection task for only one class.
+
+\subsection{\textbf{Real-time Colon Polyps Detection Task}}
+
+Compared to other AI diagnosis and treatment system, there are two characteristics of our task:
+
+First, Accurate localizing. Our system is required to not only determine if there exists a colon polyp, but also localize where the colon polyps exactly are. Accurate localizing results help doctors diagnose the severity of the colonic adenocarcinoma and perform precise surgery resection.
+
+Second, real-time performance. We work for a system that can perform real-time optical biopsy of colon polyps during colon endoscopy. Our system should be able to quickly detect abnormal objects and give an alert to assist doctors to further observe the lesion location. Therefore, our system is supposed to perform sufficiently well both in accuracy and testing speed.
+
+\subsection{\textbf{Dataset}}
+
+Our colon polyps image dataset consists of 1,164 colon endoscopy images of various size from different patients. 324 images among them are discriminated by a proficient doctor to have at least one colon polyp. And the colon polyps are localized by the doctor using LabelImg software. The results are saved as xml documents. See Figure \ref{fig1} and Figure \ref{fig2} for examples of the dataset.
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=7cm]{fig1}\\
+  \caption{An example of colon endoscopy images.}\label{fig1}
+\end{figure}
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=9cm]{fig2}\\
+  \caption{An example of xml documents.}\label{fig2}
+\end{figure}
+
+Each xml document corresponds to an image containing colon polyp(s). The labels are:
+
+size: size of the image, including width, height, depth.
+
+object: detailed information of the colon polyp. The ‘name’ node means the class of the object. In this task, we have one class, that is colon polyps. The ‘bndbox’ node indicates the bounding box and (xmin, ymin), (xmax, ymax) show the top left and the bottom right coordinates of the bounding box respectively.
+
+etc.
+
+To achieve both sufficiently high accuracy and real-time performance, we decide to construct our colon polyps detection system based on deep learning. Because of lack of labeled images, we apply transfer learning to avoid overfitting and reduce our training time.
+
+\chapter{\textbf{Model Selection}}
+
+In this section, we first display several detection systems, then conduct a deep analysis among them. At last, we will decide the most suitable system for our task.
+
+\section{\textbf{Existing Detection Systems}}
+
+Object detection is one of the core problems in computer vision. Nowadays, lots of detection models have considerable good performance, including DPM (Deformable Parts Models), R-CNN series (R-CNN, fast R-CNN, faster R-CNN), YOLO (You Only Look Once) series models (YOLOv1, YOLOv2, YOLO9000, YOLOv3), etc. Generally, detection systems repurpose classifiers to carry out detection. They accomplish the detection task through a detection pipeline which starts by extracting features from input images using convolutional networks, and then carry out classifiers and subsequently, the localizers.
+
+Specifically, DPM \cite{Felzenszwalb} applies a sliding window approach and runs a classifier at evenly spaced locations over the entire image. The disjoint pipeline consists of extracting features from the current window, running classifier, predicting bounding box for high scoring regions, etc. As DPM performs detection on sliding windows separately, it fails to utilize global information of the whole image when detecting for a single sliding window.
+
+R-CNN \cite{Girshick} uses region proposals instead of sliding windows to find objects in images. Selective Search generates potential bounding boxes, then a convolutional network extracts features from the bounding boxes, an SVM (support vector machine) scores the boxes, a linear model adjusts the bounding boxes, and non-max suppression eliminates duplicate detections. Each step of this disjoint pipeline should be tuned independently, resulting in a slow system which takes more than 40 seconds per image at test time. Fast R-CNN \cite{Frcnn} and faster R-CNN \cite{fasterrcnn} share computation and use neural networks to propose regions instead of Selective Search, which ends up speeding up R-CNN remarkably, but still worse than real-time.
+
+However, unlike all those systems, YOLO \cite{YOLO} frames object detection as a regression problem, and uses a single neural network to predict bounding boxes and class probabilities directly from full images in one evaluation. You only look once at an image to predict whether and what objects are present and where they are. According to \cite{YOLO}, YOLO outperforms other detection systems including R-CNN, DPM in terms of mAP (mean average precision) evaluation metric, and processes images extremely fast at test time and reaches real-time performance. Advantages of this unified model are shown in the next section.
+
+\section{\textbf{Advantages of YOLO Architecture}}
+
+\begin{itemize}
+\item[-]End-to-end architecture. As YOLO pipeline predicts bounding boxes and class probabilities in a single neural network, we don’t bother to tune several components of a disjoint pipeline separately. And that leads to a simple training process.
+\end{itemize}
+
+\begin{itemize}
+\item[-]Real-time performance at test time. YOLO model processes images in real-time at 45 fps (frames per second) on a Titan X GPU. The outstanding speed allows us to process streaming videos in real-time which in accordance with colon polyps real-time detection requirement. See Table \ref{Tbl1} for comparisons of speed among YOLO and other systems. A demo of YOLO system running in real-time on webcam is present on \url{http://pjreddie.com/yolo/}.
+\end{itemize}
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=11cm]{Tbl1}\\
+  \caption{ Real-time detection systems testing on PASCAL VOC 2007. Fast YOLO is the fastest detector that reaches 155 fps (frames per second). YOLO is a bit faster than R-CNN, fast R-CNN, Faster R-CNN though less accurate, and this issue is solved in the new version YOLOv3. This table is from \cite{YOLO}.}\label{Tbl1}
+\end{figure}
+
+\begin{itemize}
+\item[-]Better generalizability. In real-world applications, it’s common that the test data diverges from training data. Figure \ref{fig3} shows comparable performance among YOLO and other detection systems. On VOC 2007 detection, all models are trained on VOC 2007 data. On Picasso data, all are trained on VOC 2012 while on People-Art they are trained on VOC 2010. YOLO has good performance on VOC 2007 and degrades less than other systems when being generalized to art work datasets. In our task, We hope that our system can generalize well on the colon endoscopy images. Based on the analysis above, we think YOLO is less likely to break down when applied to our task.
+\end{itemize}
+
+\begin{figure*}[h]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth]{fig3-a}
+\end{subfigure}
+~
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth, height=3cm]{fig3-b}
+\end{subfigure}
+\caption{Generalization results on Picasso and People-Art work. The left panel shows the precision-recall curves on Picasso dataset. Obviously, YOLO performs the best among all detection systems but still worse than human. The right panel displays quantitative results on VOC 2007, Picasso, and People-Art Datasets. The table indicates a better generalizability of YOLO. The figure comes from \cite{YOLO}.}
+\label{fig3}
+\end{figure*}
+
+\begin{itemize}
+\item[-]Less false positive errors. Figure \ref{fig4} shows a detailed breakdown of results on VOC 2007. Though less accurate than fast R-CNN, YOLO is less likely to predict false positives on background. In our application, It’s important that doctors make less false positive errors when applying YOLO system to detect colon polyps.
+\end{itemize}
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=10cm]{fig4}\\
+  \caption{Error analysis: Fast R-CNN vs. YOLO. These charts show the percentage of localization and background errors. The figure is from \cite{YOLO}.}\label{fig4}
+\end{figure}
+
+
+\section{\textbf{Limitations of YOLO}}
+YOLO imposes strong spatial constraints that one grid cell can only predict one object. It doesn’t matter when applied to our application as we only have one colon polyp to detect for about 98\% of our images.
+
+ \cite{YOLO} points out that YOLO struggles to detect small objects such as birds in a flock. This may cause problem for colon polyps detection. Fortunately, YOLOv3 \cite{YOLOv3} carries out a wonderful solution to this problem by predicting boxes at 3 scales.
+
+As can be seen from Figure \ref{fig4}, the main source of error of YOLO is incorrect localizations. YOLO struggles to predict precisely where the objects are present. And this problem is solved by YOLOv2 \cite{YOLOv2} by making some constraints on the bounding box center location using logistic activation.
+
+Moreover, YOLOv2 proposes various improvements to YOLOv1 and offers a trade-off between accuracy and speed using a novel, multi-scale training method. YOLOv2 outperforms state-of-the-art methods at 40 fps like Faster R-CNN with ResNet and SSD while still running significantly faster. (See Figure \ref{fig5})
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=9cm]{fig5}\\
+  \caption{Accuracy and speed on VOC 2007 dataset. YOLOv2 performs much better than YOLO both in mAP and speed evaluation metrics. YOLOv2 runs much fast than faster R-CNN while still achieving comparable mAP. This figure comes from \cite{YOLOv2}.}\label{fig5}
+\end{figure}
+
+It’s worth mentioning that YOLOv2 applies multi-scale training method to force the network to learn to predict well across a variety of input dimensions. The input images size changes in every few iterations rather than being fixed. This means the network is trained on images of various size and thus can perform detections at different resolutions. From this perspective, YOLOv2 fits our task so well as our colon polyps images are of various size.
+
+YOLOv3 makes even further improvements to YOLOv2 including using a deeper, powerful network. YOLOv3 predicts 3 boxes at different scale and is now able to gain more finer-grained information of the whole image. As a result, YOLOv3 predicts small objects as well as other comparable detection systems. Figure \ref{fig6} shows that YOLOv3 achieves comparable performance to the state-of-the-art models on COCO dataset while still fast enough.
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=10cm]{fig6}\\
+  \caption{Speed and mAP-50 accuracy comparisons. YOLOv3 runs significantly than other detection methods with comparable .5AP performance. Times are from Titan X. This figure is a screenshot from \cite{YOLOv3}}\label{fig6}
+\end{figure}
+
+According to the analysis above, the YOLO design enables end-to-end training and real-time speeds while maintaining high average precision. Moreover, it has several advantages over other detection systems that matches our task so well. YOLOv3 achieves state-of-the-art performance in both accuracy and speed. Hence, we decide to build our colon polyps detection system based on YOLOv3.
+
+
+\chapter{\textbf{Colon Polyps Detection System}}
+
+In this section, we’ll introduce the architecture of the YOLOv3 and how we apply transfer learning to perform colon polyps detection. Because of our limited dataset, it is unwise to build and train our own neural network from scratch. We purpose the idea of transfer learning and build our system based on the YOLOv3 architecture. More specifically, we fix the structure and weights of the lower layers of YOLOv3, and reinitialize the weights of the last few layers including the three output layers.
+
+\section{\textbf{YOLOv3 Architecture}}
+
+YOLOv3 uses Darknet-53 framework to perform feature extraction. The network uses successive \begin{math}1\times1\end{math} and \begin{math}3\times3\end{math} convolutional layers and has some shortcut connections as well. Figure \ref{yolov3} presents the Darknet-53 framework. Figure \cite{YOLOv3} shows that Darknet-53 structure can greatly utilize the GPU, making it more efficient to evaluate and thus faster.
+
+
+On top of the darknet-53 architecture, YOLOv3 adds additional convolutional layers and separately predicts 3 boxes that at each scale. (See Figure \ref{yolov3}) Unlike YOLOv2, YOLOv3 excludes all pooling layers and uses convolutional layers rather than fully connected layer to be the output layers, that is, the detectors. Dimension of each detector is \begin{math}3\times(1+4+C)\end{math}, where 1 stands for probability of objects, 4 denotes coordinates of the bounding box, C means the number of classes, 3 stands for three boxes. As is shown in \ref{yolov3}, scale 2 detector benefits from scale 1 and scale 3 benefits from all prior computation as well as finer-grained features from earlier layers. This multi-scale design was proved to improve performance of detecting small objects.
+
+\begin{figure}
+  \centering
+  % Requires \usepackage{graphicx}
+  \includegraphics[width=13cm]{yolov3}\\
+  \caption{ YOLOv3 architecture.}\label{yolov3}
+\end{figure}
+
+\section{\textbf{Transfer Learning}}
+We made a small modification of YOLOv3 architecture. That is, we changed the number of filters of the three last layers and set to 18, as we only have one single class to detect. Because of the limited data, we don’t train our network from scratch and just fix the weights of all other convolutional layers except for the yolo layers, i.e. the three detectors. In training, weights of the detectors are randomly initialized and changed during training process.
+\label{section3.2}
+
+\section{\textbf{Colon Polyps Detection System}}
+We construct our end-to-end colon polyps detection pipeline on top of YOLOv3 system and detect colon polyps through a single fully convolutional network. Our system is supposed to be employed in practical application scenario, that is, assist doctors in diagnosing colon polyps in real-time during colon endoscopy. When an image sent in, our system should quickly determine if there exists colon polyps and presents the exact locations of colon polyps. And doctors can therefore decide whether to observe further into the lesion location. And that will surely improve the efficiency for both doctors and patients.
+
+
+\chapter{\textbf{Experiments}}
+We first randomly selected 224 of the 324 images that contains colon polyp(s) as the training set, and the remaining 100 images as test set. And all the 840 images that do not contain a colon polyp are used for further evaluation of our system. (See Section \ref{section4.3})
+
+As was discussed in Section \ref{section3.2}, we changed the number of filters of the three detectors, and set to 18. We just downloaded the weights of all other layers that pre-trained on ImageNet, and fixed them during training while weights of the detectors were first randomly initialized.
+
+\section{\textbf{Training Settings}}
+We used multi-scale training approach, batch normalization and a bunch of data augmentation including rotation, saturation, exposure, etc. Learning rate was first set to 0.001. The batch size is 64, momentum is 0.9 and 0.0005 weight decay. Our model was trained on a single Titan X for the first 2,500 batches, and later, on two Titan X GPUs. It took 15.5 hours in total to train the model.
+
+The average loss decreases rapidly as training begins, and changes too little for about 100 batches. (See Figure \ref{fig8}) However, when we use the model that trained for only 100 batches, we get nearly zero recall meaning the model is seriously underfitting. Therefore, we decide to choose the best iterations number according to the curve of the logarithm of the average loss. According to Figure \ref{fig8}, we consider 8,500 to be the best iterations number, and evaluate our system using the weights that trained for 8,500 batches.
+
+\begin{figure*}[h]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth]{fig8-a}
+\end{subfigure}
+~
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth, height=6.2cm]{fig8-b}
+\end{subfigure}
+\caption{Loss curves. The left panel shows the exponentially weighted averages of loss with coefficient being 0.9. The right panel is the logarithm of the average loss.}
+\label{fig8}
+\end{figure*}
+
+\section{\textbf{Testing}}
+We set the IOU threshold to be 0.3 and test our system on the test set. We get 75.26\% recall and 70.87\% precision on the 100 images. The scores are not that high meaning that our system needs lots of further improvements. We will discuss this problem in Section \ref{section4.4}. Examples of correctly detected images are displayed in Figure \ref{fig9}.
+
+\begin{figure*}[h]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth]{fig9-a}
+\end{subfigure}
+~
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth, height=6.2cm]{fig9-b}
+\end{subfigure}
+\caption{Examples of correctly detected colon polyps.}
+\label{fig9}
+\end{figure*}
+
+When testing on a Titan X GPU, the whole testing process costs 3.064714 seconds, i.e., 0.0306seconds per image. Therefore, our system achieves real-time performance, say 32.6 fps.
+
+\label{section4.2}
+
+\section{\textbf{Evaluation of Classification}}
+To further evaluate the performance of our system, we regard our system as a classifier. We wonder if our system can correctly distinguish normal images from images that contains colon polyps. In order to avoid unbalanced classification problem, we first randomly selected 100 of the 840 normal images, and combined them with the 100 images of the test set. We ran our system on each of the 200 images. Results are displayed on Table \ref{table:Re}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{|c|c|c|c| }
+\hline
+& \multicolumn{2}{|c|}{Ground Truth} & \multirow{2}{*}{Total}\\
+\cline{1-3}
+Prediction & Normal & Colon Polyp(s) & \\
+\hline
+Normal & 93 & 11 & 104 \\
+\hline
+Colon Polyp(s) & 13 & 83 & 96\\
+\hline
+Total & 106 & 94 & 200\\
+\hline
+\end{tabular}
+\caption{Results of classification evaluation. recall=83/94=88.30\%, precision=83/96=86.46\%}
+\label{table:Re}
+\end{table}
+
+At this time, the recall and precision scores are evidently higher than that of the detection procedure. We conclude that our system is capable of telling normal images from images that contains colon polyps, though struggles to figure out the exact locations of the colon polyps.
+
+Looking deeper into the 13 false positives predictions, we find out that our system does detect some polyps though they are other kinds of polyps rather than colon polyps. All that means is  that our system needs further improvement to learn more detailed features of colon polyps. For examples see Figure \ref{fig10}.
+
+\begin{figure*}[h]
+\centering
+
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth]{fig10-a}
+\end{subfigure}
+~
+\begin{subfigure}{0.48\textwidth}
+\includegraphics[width=1\linewidth, height=6.2cm]{fig10-b}
+\end{subfigure}
+\caption{An example of false positive errors. The image in the left contains a colon polyp, while the right displays an polyp that of different category. We see that our system mistakes the polyp in the right image as a colon polyp.}
+\label{fig10}
+\end{figure*}
+
+\label{section4.3}
+
+\section{\textbf{Comments on Our System}}
+According to the analysis in Section \ref{section4.2} and Section \ref{section4.3}, our system struggles to discriminate colon polyps from normal polyps and determine the precise locations of colon polyps, which informs us that our system is not so good at extracting features of colon polyps. The main solution may be larger dataset considering that we now have only 224 images for training. Moreover, we can also initialize and train the weights of the three layers following which are the detectors.
+\label{section4.4}
+
+
+
+\chapter{\textbf{Conclusion and Future Work}}
+YOLOv3 is an end-to-end real-time detection pipeline using a single fully convolutional network. Advantages of YOLOv3 compared with other detection systems includes end-to-end architecture, real-time performance, better generalizability and less false positive rate. Hence, we propose YOLOv3 to carry out colon polyps real-time detection task.
+
+We randomly initialize and train the weights of the three detection layers basing on the idea of transfer learning. Experiments show that our system performs quite well in distinguishing images of colon polyps from normal images, though struggles to figure out the exact lesion locations. Moreover, our system sometimes mistakes other polyps as colon polyps. The main reasons may be limited training set and the inappropriate transfer learning architecture.
+
+For future work, we will collect more training data and try different network architecture to help improve the capacity of extracting deeper and more detailed features of colon polyps.
+
+
+\chapter*{\textbf{Acknowledgements}}
+\addcontentsline{toc}{chapter}{Acknowledgements}
+I wish to express my great gratitude to my supervisor, Teacher Huang Zhihong for his kindly guidance during my writing of the thesis, together with alumna He Cuiyi who offered several insightful suggestions on my experiments. I have also benefited from Doctor Zhong Dong for his precious colon endoscopy images dataset. Schoolmate Zhang Yikun is highly appreciated for his technical support in \LaTeX.
+
+I will always feel grateful to Teacher Ren Chuanxian. I learnt a lot in his class and restored self-confidence academically owing to his trust and encouragement. I have further been fortunate to join Yat-sen Siyuan Programme and made friends with many outstanding fellows who inspire me constantly. I owe sincere thanks to my roommate Chen Fengjie for his assistance in all his forms in the past four years. Thanks also go to my best friends Liang Peichen, Chen Junxuan, Gao Yi, Zhou Siwen who always encourage me whenever I’m depressed. Moreover, I am obliged to uncle Yang as well as teachers in Guohua for their generous help.
+
+Finally, I want to express my greatest thanks to my mother and my family, who are my source of happiness and motivation. I am really indebted to their love, encouragement and understanding.
+
+My best thanks to them all.
+
+\vspace{2cm}
+
+\bibliographystyle{plain}
+\begin{thebibliography}{999}
+
+\bibitem{Kermany}
+Kermany et al., 2018, Cell 172, 1122–1131 February 22, 2018 2018 Elsevier Inc. https://doi.org/10.1016/j.cell.2018.02.010
+
+\bibitem{Chuang}
+Shie C K, Chuang C H, Chou C N, et al. Transfer representation learning for medical image analysis[C]// International Conference of the IEEE Engineering in Medicine \& Biology Society. Conf Proc IEEE Eng Med Biol Soc, 2015:711.
+
+\bibitem{Felzenszwalb}
+P. F. Felzenszwalb, R. B. Girshick, D. McAllester, and D. Ramanan. Object detection with discriminatively trained part based models. IEEE Transactions on Pattern Analysis and Machine Intelligence, 32(9):1627–1645, 2010. 1, 4
+
+\bibitem{Girshick}
+R. Girshick, J. Donahue, T. Darrell, and J. Malik. Rich feature hierarchies for accurate object detection and semantic segmentation. In Computer Vision and Pattern Recognition (CVPR), 2014 IEEE Conference on, pages 580–587. IEEE, 2014. 1, 4, 7
+
+\bibitem{Frcnn}
+Girshick, Ross. “Fast r-cnn.” Proceedings of the IEEE International Conference on Computer Vision. 2015.
+
+\bibitem{fasterrcnn}
+Ren S, He K, Girshick R, et al. Faster r-cnn: Towards real-time object detection with region proposal networks[C]. NIPS,2015.
+
+\bibitem{YOLO}
+Redmon, Joseph; Divvala, Santosh; Girshick, Ross; Farhadi, Ali. You Only Look Once: Unified, Real-Time Object Detection. arXiv:1506.02640. 06/2015.
+
+\bibitem{YOLOv2}
+Redmon, Joseph and Farhadi, Ali. arXiv:1612.08242. 2016.
+
+\bibitem{YOLOv3}
+Redmon, Joseph and Farhadi, Ali. YOLOv3: An Incremental Improvement. arXiv, 2018.
+
+\addcontentsline{toc}{chapter}{Bibliography}
+\end{thebibliography}
+
+
+\end{document}
